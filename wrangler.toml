@@ -1,0 +1,12 @@
+name = "presensi-wajah"
+main = "index.js"
+compatibility_date = "2026-01-01"
+
+[assets]
+directory = "."
+binding = "ASSETS"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "presensi-db"
+database_id = "GANTI_DENGAN_DATABASE_ID_DARI_CLOUDFLARE"
