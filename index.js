@@ -21,8 +21,8 @@ export default {
       });
 
     try {
-      // Pastikan tabel database otomatis ada (Auto-Migration)
-      await env.DB.exec(`
+      // Inisialisasi tabel satu per satu secara aman untuk Cloudflare D1
+      await env.DB.prepare(`
         CREATE TABLE IF NOT EXISTS users (
             id TEXT PRIMARY KEY,
             name TEXT NOT NULL,
@@ -30,7 +30,10 @@ export default {
             department TEXT NOT NULL,
             registered_at TEXT NOT NULL,
             face_vector TEXT NOT NULL
-        );
+        )
+      `).run();
+
+      await env.DB.prepare(`
         CREATE TABLE IF NOT EXISTS attendance (
             id TEXT PRIMARY KEY,
             user_id TEXT NOT NULL,
@@ -41,13 +44,19 @@ export default {
             timestamp INTEGER NOT NULL,
             status TEXT NOT NULL DEFAULT 'Hadir',
             method TEXT NOT NULL DEFAULT 'Scan Wajah'
-        );
+        )
+      `).run();
+
+      await env.DB.prepare(`
         CREATE TABLE IF NOT EXISTS settings (
             key TEXT PRIMARY KEY,
             value TEXT NOT NULL
-        );
-        INSERT OR IGNORE INTO settings (key, value) VALUES ('threshold', '0.45');
-      `);
+        )
+      `).run();
+
+      await env.DB.prepare(`
+        INSERT OR IGNORE INTO settings (key, value) VALUES ('threshold', '0.45')
+      `).run();
 
       // 1. GET /api/bootstrap (Muat semua data awal)
       if (pathname === "/api/bootstrap" && method === "GET") {
