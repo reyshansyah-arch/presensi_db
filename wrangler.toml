@@ -1,4 +1,4 @@
-name = "presensi-wajah"
+name = "presensi_db"
 main = "index.js"
 compatibility_date = "2026-01-01"
 
@@ -8,5 +8,5 @@ binding = "ASSETS"
 
 [[d1_databases]]
 binding = "DB"
-database_name = "presensi-db"
-database_id = "GANTI_DENGAN_DATABASE_ID_DARI_CLOUDFLARE"
+database_name = "presensi_db"
+database_id = "5478fe69-537f-4bc3-9e15-73a1f52d0fbe"
